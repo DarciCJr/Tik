@@ -30,7 +30,7 @@ def terms_of_service() -> str:
         "vídeos de produtos na conta TikTok da Necx, com legendas geradas "
         "por IA. Não coletamos dados de terceiros nem oferecemos este "
         "serviço a outros usuários.</p>"
-        "<p>Contato: darcicidadejunior@gmail.com</p>"
+        "<p>Contato: necxvendas@gmail.com</p>"
         "</body></html>"
     )
 
@@ -44,7 +44,7 @@ def privacy_policy() -> str:
         "TikTok da Necx, necessários para publicar conteúdo em nome dessa "
         "conta. Nenhum dado de terceiros é coletado, compartilhado ou "
         "vendido.</p>"
-        "<p>Contato: darcicidadejunior@gmail.com</p>"
+        "<p>Contato: necxvendas@gmail.com</p>"
         "</body></html>"
     )
 
