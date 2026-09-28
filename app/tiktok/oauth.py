@@ -12,7 +12,7 @@ from app.core.config import get_settings
 AUTH_URL = "https://www.tiktok.com/v2/auth/authorize/"
 TOKEN_URL = "https://open.tiktokapis.com/v2/oauth/token/"
 
-SCOPES = ["user.info.basic", "video.publish", "video.upload"]
+SCOPES = ["user.info.basic", "video.upload"]
 
 
 def build_authorize_url(state: str) -> str:
