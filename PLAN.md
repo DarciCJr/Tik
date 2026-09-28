@@ -1,9 +1,14 @@
 # Plano — Tik (postagem automática TikTok + IA)
 
 ## Objetivo de negócio
-Faturar com TikTok publicando conteúdo em volume, com qualidade suficiente
-pra reter audiência, usando geração de conteúdo por IA + automação de
-publicação — sem violar os Termos de Uso (o que levaria a shadowban/ban).
+Loja **Necx** no TikTok Shop. Pipeline automático que pega vídeo de
+produto de fonte liberada pra revenda (fornecedor/CJ Dropshipping etc.),
+edita (corte/reordena clipes pra passar da detecção de duplicata),
+adiciona logo/texto da loja via IA, gera legenda/hashtags, e publica
+como post com **product anchor** (vídeo vinculado ao produto da loja) —
+sem violar Termos de Uso (o que levaria a shadowban/ban) e sem reuso
+"cru" de vídeo de terceiros (suprimido pelo algoritmo e risco de strike
+de direitos autorais).
 
 ## Arquitetura (na sua VPS/WSL2)
 
@@ -29,11 +34,13 @@ Internet ──Cloudflare Tunnel──> Apache (WSL2) ──ProxyPass──> con
   internos pra disparar geração/publicação, healthcheck.
 - `tiktok/` — cliente da Content Posting API (auth, refresh token, upload
   de vídeo, criação de post/rascunho, consulta de status).
-- `content/` — pipeline de geração de conteúdo:
-  - roteiro/legenda via LLM (Claude API)
-  - texto-pra-voz (TTS) se for vídeo narrado
-  - montagem de vídeo (ex: ffmpeg + templates, ou remix de clipes)
-  - hashtags/SEO de legenda
+- `content/` — pipeline de conteúdo:
+  - `video_source.py` — baixa vídeo de produto de fonte liberada pra
+    revenda (fornecedor/CJ Dropshipping)
+  - `video_processor.py` — ffmpeg: corta/reordena clipes (evitar hash
+    idêntico ao original), overlay de logo da loja e texto na tela
+  - `script_generator.py` — legenda + hashtags via LLM (Claude API)
+  - (opcional depois) TTS se quiser narração
 - `scheduler/` — fila de publicação (ex: APScheduler ou Celery+Redis) —
   decide quando cada vídeo vai pro TikTok, evita padrão robótico
   (horários variados, intervalo mínimo entre posts).
