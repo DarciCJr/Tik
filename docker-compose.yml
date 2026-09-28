@@ -1,0 +1,18 @@
+services:
+  tik-api:
+    build: .
+    container_name: tik-api
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "127.0.0.1:8090:8000"
+    volumes:
+      - ./data:/app/data
+      - ./storage:/app/storage
+    networks:
+      - rede-vps
+
+networks:
+  rede-vps:
+    external: true
