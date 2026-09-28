@@ -4,6 +4,7 @@ import secrets
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
 from app.content.script_generator import generate_script
@@ -18,6 +19,34 @@ _oauth_states: set[str] = set()
 @app.get("/healthz")
 def healthz() -> dict[str, str]:
     return {"status": "ok"}
+
+
+@app.get("/legal/terms", response_class=HTMLResponse)
+def terms_of_service() -> str:
+    return (
+        "<html><body>"
+        "<h1>Termos de Uso — Necx Auto</h1>"
+        "<p>Esta ferramenta é de uso interno da Necx para gerar e publicar "
+        "vídeos de produtos na conta TikTok da Necx, com legendas geradas "
+        "por IA. Não coletamos dados de terceiros nem oferecemos este "
+        "serviço a outros usuários.</p>"
+        "<p>Contato: darcicidadejunior@gmail.com</p>"
+        "</body></html>"
+    )
+
+
+@app.get("/legal/privacy", response_class=HTMLResponse)
+def privacy_policy() -> str:
+    return (
+        "<html><body>"
+        "<h1>Política de Privacidade — Necx Auto</h1>"
+        "<p>Esta ferramenta armazena apenas os tokens de acesso da conta "
+        "TikTok da Necx, necessários para publicar conteúdo em nome dessa "
+        "conta. Nenhum dado de terceiros é coletado, compartilhado ou "
+        "vendido.</p>"
+        "<p>Contato: darcicidadejunior@gmail.com</p>"
+        "</body></html>"
+    )
 
 
 @app.get("/oauth/start")
